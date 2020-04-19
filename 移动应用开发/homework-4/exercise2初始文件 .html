@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0, user-scalable=no" />
+		<title>DOM编程练习</title>
+		<style>
+		    body{
+		    	background-color: #ccc;
+		    }
+		</style>
+	</head>
+	<body>
+		<ul id="dataList">
+			<li>item1</li>
+			<li>item2</li>
+			<li>item3</li>
+		</ul>
+		<input type="button" value="上拉刷新" id="btnPullUp"/>
+		<input type="button" value="下拉加载" id="btnPullDown"/>
+		<script>
+		    var list=document.getElementById("dataList");
+			var itemLen=document.querySelectorAll("#dataList li").length;
+			document.getElementById('btnPullUp').addEventListener('click',function () {
+			    var fragment=document.createDocumentFragment();
+			    for(var i=0;i<3;i++){
+			    	var oLi=document.createElement("li");
+			    	oLi.innerText="item"+(++itemLen);
+			    	fragment.appendChild(oLi);
+			    }
+			    list.appendChild(fragment);
+			},false);
+			document.getElementById('btnPullDown').addEventListener('click',function () {
+				var fragment=document.createDocumentFragment();
+				itemLen+=3;
+			    for(var i=itemLen;i>itemLen-3;i--){
+			    	var oLi=document.createElement("li");
+			    	oLi.innerText="item"+i;
+			    	fragment.appendChild(oLi);
+			    }
+			    list.insertBefore(fragment,list.firstChild);
+			},false);	
+		</script>
+	</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>图片刷新</title>
+		<style type="text/css">
+			html,body,div,.main,p,ul,li{ margin: 0; padding: 0; }
+			#picture li{ background-color: #CCCCCC; margin-bottom: 1px; padding: 20px 10px; }
+			.refreshText1 .refreshText2{ line-height: 1.875rem; }
+		img{
+			height:17.5rem;
+			width:15.75rem;
+			padding: 0.9375rem;
+			background:white; 
+			border:2px solid #ddd;
+			box-shadow:2px 2px 6px rgba(50, 50, 50, 0.6);
+			margin-left: 1rem;
+		}
+		</style>
+	</head>
+	<body>
+		<div id="main">
+			<p class="refreshText1">下拉刷新</p>
+			<ul id="picture">
+				<li><img src="images/p0.jpg" /></li>
+				<li><img src="images/p1.jpg" /></li>
+				<li><img src="images/p2.jpg" /></li>
+			</ul>
+			<p class="refreshText2">上拉刷新</p>
+		</div>
+		<script type="text/javascript">
+		(function(window){
+			function getsrcollTop(){
+				var scrollTop=0;
+				if(document.documentElement&& document.documentElement.scrollTop){
+					scrollTop=document.documentElement.scrollTop;
+				}
+				else if(document.body){
+					scrollTop=document.body.scrollTop;
+				}
+				return scrollTop;
+			}
+			function getclientHeight() {
+			    var clientHeight = 0; 
+			    if (document.body.clientHeight && document.documentElement.clientHeight) { 
+			    	clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight); 
+			    } 
+			    else { 
+			    	clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight); 
+			    } 
+			    return clientHeight; 
+			}
+			function getscrollHeight() {
+				return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight); 
+			}
+			var _text = document.querySelector('.refreshText2'),
+			_container = document.getElementById('picture');
+			var throttle = function(method, context){
+				  clearTimeout(method.tId);
+				  method.tId = setTimeout(function(){
+				    method.call(context);
+				  }, 300);
+			}
+			function refresh() {
+				setTimeout(function() {
+					_container.insertAdjacentHTML('beforeend', '<li><img src=""></li>');
+					var imgNum=document.getElementsByTagName("img");
+					imgi=imgNum.length;
+					if(imgNum.length>10) imgi=imgNum.length%10;
+					imgNum[imgNum.length-1].src="images/p"+imgi+".jpg"
+				}, 500);
+			}
+			window.onscroll = function() {
+			  	if (getsrcollTop() + getclientHeight() == getscrollHeight()) {
+			  		_text.innerText = '加载中...';
+			  		throttle(refresh);
+			  	}		
+			};
+			var _element = document.getElementById('picture'),
+			  _refreshText = document.querySelector('.refreshText1'),
+			  _startPos = 0,
+			  _transitionHeight = 0;
+			_element.addEventListener('touchstart', function(e) {
+				_startPos = e.touches[0].pageY;
+				_element.style.position = 'relative';
+				_element.style.transition = 'transform 0s';
+			}, false);
+			_element.addEventListener('touchmove', function(e) {
+				_transitionHeight = e.touches[0].pageY - _startPos;
+				if (_transitionHeight > 0 && _transitionHeight < 60) {
+					_refreshText.innerText = '下拉刷新';
+					_element.style.transform = 'translateY('+_transitionHeight+'px)';
+					if (_transitionHeight > 55) {
+					  _refreshText.innerText = '释放更新';
+					}
+				}				
+			}, false);
+			_element.addEventListener('touchend', function(e) {
+				_element.style.transition = 'transform 0.5s ease 1s';
+				_element.style.transform = 'translateY(0px)';
+				_refreshText.innerText = '更新中...';
+			}, false);
+		})(window)
+		</script>
+	</body>
+</html>
