@@ -1,0 +1,15 @@
+Index: 移动应用开发/homework-1/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><!DOCTYPE html>\r\n<html>\r\n\t<head>\r\n\t\t<meta charset=\"utf-8\" />\r\n\t\t<title>test1</title>\r\n\t\t<style>\r\n\t\t\tdiv{\r\n\t\t\t\twidth: 300px;\r\n\t\t\t\theight: 200px;\r\n\t\t\t\tbackground-color: antiquewhite;\r\n\t\t\t\tborder: 5px solid mediumturquoise;\r\n\t\t\t\tpadding: 10px 5px 8px 15px;\r\n\t\t\t\tmargin: 10px;\r\n\t\t\t\ttext-align: center;\r\n\t\t\t\tline-height: 200px;\r\n\t\t\t\tfont-weight: 700;\r\n\t\t\t}\r\n\t\t</style>\r\n\t</head>\r\n\t<body>\r\n\t\t<div>Freedom!!!!!!!</div>\r\n\t</body>\r\n</html>\r\naaaaa\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- 移动应用开发/homework-1/index.html	(revision 7de2dadc05c73684059d2ba0c2fba815d1bd066c)
++++ 移动应用开发/homework-1/index.html	(date 1587294037545)
+@@ -22,3 +22,4 @@
+ 	</body>
+ </html>
+ aaaaa
++bbb
+\ No newline at end of file
